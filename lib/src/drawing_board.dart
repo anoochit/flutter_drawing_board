@@ -382,7 +382,8 @@ class _DefToolItemWidget extends StatelessWidget {
       onPressed: item.onTap,
       icon: Icon(
         item.icon,
-        color: item.isActive ? item.activeColor : item.color,
+        color:
+            item.isActive ? Theme.of(context).colorScheme.primary : item.color,
         size: item.iconSize,
       ),
     );

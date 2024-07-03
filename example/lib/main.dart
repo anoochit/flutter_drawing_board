@@ -338,6 +338,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   showDefaultActions: true,
                   showDefaultTools: true,
+
                   // defaultToolsBuilder: (Type t, _) {
                   //   return DrawingBoard.defaultTools(t, _drawingController)
                   //     ..insert(
