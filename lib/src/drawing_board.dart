@@ -178,11 +178,8 @@ class _DrawingBoardState extends State<DrawingBoard> {
     );
 
     if (widget.showDefaultActions || widget.showDefaultTools) {
-      content = Stack(
+      content = Row(
         children: [
-          // canvas
-          Expanded(child: content),
-
           // tools
           if (widget.showDefaultTools)
             buildDefaultTools(
@@ -190,11 +187,16 @@ class _DrawingBoardState extends State<DrawingBoard> {
               defaultToolsBuilder: widget.defaultToolsBuilder,
               axis: Axis.vertical,
             ),
-          // actions
-          if (widget.showDefaultActions)
-            Align(
-                alignment: Alignment.bottomCenter,
-                child: buildDefaultActions(_controller)),
+          Expanded(
+            child: Column(
+              children: [
+                // actions
+                if (widget.showDefaultActions) buildDefaultActions(_controller),
+                // canvas
+                Expanded(child: content),
+              ],
+            ),
+          ),
         ],
       );
     }
