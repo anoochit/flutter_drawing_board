@@ -72,127 +72,62 @@ const Map<String, dynamic> _testLine2 = <String, dynamic>{
   }
 };
 
-// /// Custom drawn triangles
-// class Triangle extends PaintContent {
-//   Triangle();
+/// Custom drawn image
+/// url: https://web-strapi.mrmilu.com/uploads/flutter_logo_470e9f7491.png
+const String _imageUrl =
+    'https://web-strapi.mrmilu.com/uploads/flutter_logo_470e9f7491.png';
 
-//   Triangle.data({
-//     required this.startPoint,
-//     required this.A,
-//     required this.B,
-//     required this.C,
-//     required Paint paint,
-//   }) : super.paint(paint);
+class ImageContent extends PaintContent {
+  ImageContent(this.image, {this.imageUrl = ''});
 
-//   factory Triangle.fromJson(Map<String, dynamic> data) {
-//     return Triangle.data(
-//       startPoint: jsonToOffset(data['startPoint'] as Map<String, dynamic>),
-//       A: jsonToOffset(data['A'] as Map<String, dynamic>),
-//       B: jsonToOffset(data['B'] as Map<String, dynamic>),
-//       C: jsonToOffset(data['C'] as Map<String, dynamic>),
-//       paint: jsonToPaint(data['paint'] as Map<String, dynamic>),
-//     );
-//   }
+  ImageContent.data({
+    required this.startPoint,
+    required this.size,
+    required this.image,
+    required this.imageUrl,
+    required Paint paint,
+  }) : super.paint(paint);
 
-//   Offset startPoint = Offset.zero;
+  factory ImageContent.fromJson(Map<String, dynamic> data) {
+    return ImageContent.data(
+      startPoint: jsonToOffset(data['startPoint'] as Map<String, dynamic>),
+      size: jsonToOffset(data['size'] as Map<String, dynamic>),
+      imageUrl: data['imageUrl'] as String,
+      image: data['image'] as ui.Image,
+      paint: jsonToPaint(data['paint'] as Map<String, dynamic>),
+    );
+  }
 
-//   Offset A = Offset.zero;
-//   Offset B = Offset.zero;
-//   Offset C = Offset.zero;
+  Offset startPoint = Offset.zero;
+  Offset size = Offset.zero;
+  final String imageUrl;
+  final ui.Image image;
 
-//   @override
-//   void startDraw(Offset startPoint) => this.startPoint = startPoint;
+  @override
+  void startDraw(Offset startPoint) => this.startPoint = startPoint;
 
-//   @override
-//   void drawing(Offset nowPoint) {
-//     A = Offset(
-//         startPoint.dx + (nowPoint.dx - startPoint.dx) / 2, startPoint.dy);
-//     B = Offset(startPoint.dx, nowPoint.dy);
-//     C = nowPoint;
-//   }
+  @override
+  void drawing(Offset nowPoint) => size = nowPoint - startPoint;
 
-//   @override
-//   void draw(Canvas canvas, Size size, bool deeper) {
-//     final Path path = Path()
-//       ..moveTo(A.dx, A.dy)
-//       ..lineTo(B.dx, B.dy)
-//       ..lineTo(C.dx, C.dy)
-//       ..close();
+  @override
+  void draw(Canvas canvas, Size size, bool deeper) {
+    final Rect rect = Rect.fromPoints(startPoint, startPoint + this.size);
+    paintImage(canvas: canvas, rect: rect, image: image, fit: BoxFit.fill);
+  }
 
-//     canvas.drawPath(path, paint);
-//   }
+  @override
+  ImageContent copy() => ImageContent(image);
 
-//   @override
-//   Triangle copy() => Triangle();
-
-//   @override
-//   Map<String, dynamic> toContentJson() {
-//     return <String, dynamic>{
-//       'startPoint': startPoint.toJson(),
-//       'A': A.toJson(),
-//       'B': B.toJson(),
-//       'C': C.toJson(),
-//       'paint': paint.toJson(),
-//     };
-//   }
-// }
-
-// /// Custom drawn image
-// /// url: https://web-strapi.mrmilu.com/uploads/flutter_logo_470e9f7491.png
-// const String _imageUrl =
-//     'https://web-strapi.mrmilu.com/uploads/flutter_logo_470e9f7491.png';
-
-// class ImageContent extends PaintContent {
-//   ImageContent(this.image, {this.imageUrl = ''});
-
-//   ImageContent.data({
-//     required this.startPoint,
-//     required this.size,
-//     required this.image,
-//     required this.imageUrl,
-//     required Paint paint,
-//   }) : super.paint(paint);
-
-//   factory ImageContent.fromJson(Map<String, dynamic> data) {
-//     return ImageContent.data(
-//       startPoint: jsonToOffset(data['startPoint'] as Map<String, dynamic>),
-//       size: jsonToOffset(data['size'] as Map<String, dynamic>),
-//       imageUrl: data['imageUrl'] as String,
-//       image: data['image'] as ui.Image,
-//       paint: jsonToPaint(data['paint'] as Map<String, dynamic>),
-//     );
-//   }
-
-//   Offset startPoint = Offset.zero;
-//   Offset size = Offset.zero;
-//   final String imageUrl;
-//   final ui.Image image;
-
-//   @override
-//   void startDraw(Offset startPoint) => this.startPoint = startPoint;
-
-//   @override
-//   void drawing(Offset nowPoint) => size = nowPoint - startPoint;
-
-//   @override
-//   void draw(Canvas canvas, Size size, bool deeper) {
-//     final Rect rect = Rect.fromPoints(startPoint, startPoint + this.size);
-//     paintImage(canvas: canvas, rect: rect, image: image, fit: BoxFit.fill);
-//   }
-
-//   @override
-//   ImageContent copy() => ImageContent(image);
-
-//   @override
-//   Map<String, dynamic> toContentJson() {
-//     return <String, dynamic>{
-//       'startPoint': startPoint.toJson(),
-//       'size': size.toJson(),
-//       'imageUrl': imageUrl,
-//       'paint': paint.toJson(),
-//     };
-//   }
-// }
+  @override
+  Map<String, dynamic> toContentJson() {
+    return <String, dynamic>{
+      'startPoint': startPoint.toJson(),
+      'size': size.toJson(),
+      'imageUrl': imageUrl,
+      'paint': paint.toJson(),
+    };
+  }
+}
 
 void main() {
   FlutterError.onError = (FlutterErrorDetails details) {
@@ -312,13 +247,23 @@ class _MyHomePageState extends State<MyHomePage> {
         systemOverlayStyle: SystemUiOverlayStyle.light,
         actions: <Widget>[
           IconButton(
-              icon: const Icon(Icons.line_axis), onPressed: _addTestLine),
+            icon: const Icon(Icons.line_axis),
+            onPressed: _addTestLine,
+          ),
           IconButton(
-              icon: const Icon(Icons.javascript_outlined), onPressed: _getJson),
-          IconButton(icon: const Icon(Icons.check), onPressed: _getImageData),
+            icon: const Icon(Icons.javascript_outlined),
+            onPressed: _getJson,
+          ),
           IconButton(
-              icon: const Icon(Icons.restore_page_rounded),
-              onPressed: _restBoard),
+            icon: const Icon(Icons.check),
+            onPressed: _getImageData,
+          ),
+          IconButton(
+            icon: const Icon(
+              Icons.restore_page_rounded,
+            ),
+            onPressed: _restBoard,
+          ),
         ],
       ),
       body: Column(
@@ -338,20 +283,10 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   showDefaultActions: true,
                   showDefaultTools: true,
-
                   // defaultToolsBuilder: (Type t, _) {
                   //   return DrawingBoard.defaultTools(t, _drawingController)
                   //     ..insert(
                   //       1,
-                  //       DefToolItem(
-                  //         icon: Icons.change_history_rounded,
-                  //         isActive: t == Triangle,
-                  //         onTap: () =>
-                  //             _drawingController.setPaintContent(Triangle()),
-                  //       ),
-                  //     )
-                  //     ..insert(
-                  //       2,
                   //       DefToolItem(
                   //         icon: Icons.image_rounded,
                   //         isActive: t == ImageContent,
@@ -386,13 +321,6 @@ class _MyHomePageState extends State<MyHomePage> {
               },
             ),
           ),
-          // const Padding(
-          //   padding: EdgeInsets.all(8.0),
-          //   child: SelectableText(
-          //     'https://github.com/fluttercandies/flutter_drawing_board',
-          //     style: TextStyle(fontSize: 10, color: Colors.white),
-          //   ),
-          // ),
         ],
       ),
     );
