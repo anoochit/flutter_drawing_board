@@ -72,127 +72,127 @@ const Map<String, dynamic> _testLine2 = <String, dynamic>{
   }
 };
 
-/// Custom drawn triangles
-class Triangle extends PaintContent {
-  Triangle();
+// /// Custom drawn triangles
+// class Triangle extends PaintContent {
+//   Triangle();
 
-  Triangle.data({
-    required this.startPoint,
-    required this.A,
-    required this.B,
-    required this.C,
-    required Paint paint,
-  }) : super.paint(paint);
+//   Triangle.data({
+//     required this.startPoint,
+//     required this.A,
+//     required this.B,
+//     required this.C,
+//     required Paint paint,
+//   }) : super.paint(paint);
 
-  factory Triangle.fromJson(Map<String, dynamic> data) {
-    return Triangle.data(
-      startPoint: jsonToOffset(data['startPoint'] as Map<String, dynamic>),
-      A: jsonToOffset(data['A'] as Map<String, dynamic>),
-      B: jsonToOffset(data['B'] as Map<String, dynamic>),
-      C: jsonToOffset(data['C'] as Map<String, dynamic>),
-      paint: jsonToPaint(data['paint'] as Map<String, dynamic>),
-    );
-  }
+//   factory Triangle.fromJson(Map<String, dynamic> data) {
+//     return Triangle.data(
+//       startPoint: jsonToOffset(data['startPoint'] as Map<String, dynamic>),
+//       A: jsonToOffset(data['A'] as Map<String, dynamic>),
+//       B: jsonToOffset(data['B'] as Map<String, dynamic>),
+//       C: jsonToOffset(data['C'] as Map<String, dynamic>),
+//       paint: jsonToPaint(data['paint'] as Map<String, dynamic>),
+//     );
+//   }
 
-  Offset startPoint = Offset.zero;
+//   Offset startPoint = Offset.zero;
 
-  Offset A = Offset.zero;
-  Offset B = Offset.zero;
-  Offset C = Offset.zero;
+//   Offset A = Offset.zero;
+//   Offset B = Offset.zero;
+//   Offset C = Offset.zero;
 
-  @override
-  void startDraw(Offset startPoint) => this.startPoint = startPoint;
+//   @override
+//   void startDraw(Offset startPoint) => this.startPoint = startPoint;
 
-  @override
-  void drawing(Offset nowPoint) {
-    A = Offset(
-        startPoint.dx + (nowPoint.dx - startPoint.dx) / 2, startPoint.dy);
-    B = Offset(startPoint.dx, nowPoint.dy);
-    C = nowPoint;
-  }
+//   @override
+//   void drawing(Offset nowPoint) {
+//     A = Offset(
+//         startPoint.dx + (nowPoint.dx - startPoint.dx) / 2, startPoint.dy);
+//     B = Offset(startPoint.dx, nowPoint.dy);
+//     C = nowPoint;
+//   }
 
-  @override
-  void draw(Canvas canvas, Size size, bool deeper) {
-    final Path path = Path()
-      ..moveTo(A.dx, A.dy)
-      ..lineTo(B.dx, B.dy)
-      ..lineTo(C.dx, C.dy)
-      ..close();
+//   @override
+//   void draw(Canvas canvas, Size size, bool deeper) {
+//     final Path path = Path()
+//       ..moveTo(A.dx, A.dy)
+//       ..lineTo(B.dx, B.dy)
+//       ..lineTo(C.dx, C.dy)
+//       ..close();
 
-    canvas.drawPath(path, paint);
-  }
+//     canvas.drawPath(path, paint);
+//   }
 
-  @override
-  Triangle copy() => Triangle();
+//   @override
+//   Triangle copy() => Triangle();
 
-  @override
-  Map<String, dynamic> toContentJson() {
-    return <String, dynamic>{
-      'startPoint': startPoint.toJson(),
-      'A': A.toJson(),
-      'B': B.toJson(),
-      'C': C.toJson(),
-      'paint': paint.toJson(),
-    };
-  }
-}
+//   @override
+//   Map<String, dynamic> toContentJson() {
+//     return <String, dynamic>{
+//       'startPoint': startPoint.toJson(),
+//       'A': A.toJson(),
+//       'B': B.toJson(),
+//       'C': C.toJson(),
+//       'paint': paint.toJson(),
+//     };
+//   }
+// }
 
-/// Custom drawn image
-/// url: https://web-strapi.mrmilu.com/uploads/flutter_logo_470e9f7491.png
-const String _imageUrl =
-    'https://web-strapi.mrmilu.com/uploads/flutter_logo_470e9f7491.png';
+// /// Custom drawn image
+// /// url: https://web-strapi.mrmilu.com/uploads/flutter_logo_470e9f7491.png
+// const String _imageUrl =
+//     'https://web-strapi.mrmilu.com/uploads/flutter_logo_470e9f7491.png';
 
-class ImageContent extends PaintContent {
-  ImageContent(this.image, {this.imageUrl = ''});
+// class ImageContent extends PaintContent {
+//   ImageContent(this.image, {this.imageUrl = ''});
 
-  ImageContent.data({
-    required this.startPoint,
-    required this.size,
-    required this.image,
-    required this.imageUrl,
-    required Paint paint,
-  }) : super.paint(paint);
+//   ImageContent.data({
+//     required this.startPoint,
+//     required this.size,
+//     required this.image,
+//     required this.imageUrl,
+//     required Paint paint,
+//   }) : super.paint(paint);
 
-  factory ImageContent.fromJson(Map<String, dynamic> data) {
-    return ImageContent.data(
-      startPoint: jsonToOffset(data['startPoint'] as Map<String, dynamic>),
-      size: jsonToOffset(data['size'] as Map<String, dynamic>),
-      imageUrl: data['imageUrl'] as String,
-      image: data['image'] as ui.Image,
-      paint: jsonToPaint(data['paint'] as Map<String, dynamic>),
-    );
-  }
+//   factory ImageContent.fromJson(Map<String, dynamic> data) {
+//     return ImageContent.data(
+//       startPoint: jsonToOffset(data['startPoint'] as Map<String, dynamic>),
+//       size: jsonToOffset(data['size'] as Map<String, dynamic>),
+//       imageUrl: data['imageUrl'] as String,
+//       image: data['image'] as ui.Image,
+//       paint: jsonToPaint(data['paint'] as Map<String, dynamic>),
+//     );
+//   }
 
-  Offset startPoint = Offset.zero;
-  Offset size = Offset.zero;
-  final String imageUrl;
-  final ui.Image image;
+//   Offset startPoint = Offset.zero;
+//   Offset size = Offset.zero;
+//   final String imageUrl;
+//   final ui.Image image;
 
-  @override
-  void startDraw(Offset startPoint) => this.startPoint = startPoint;
+//   @override
+//   void startDraw(Offset startPoint) => this.startPoint = startPoint;
 
-  @override
-  void drawing(Offset nowPoint) => size = nowPoint - startPoint;
+//   @override
+//   void drawing(Offset nowPoint) => size = nowPoint - startPoint;
 
-  @override
-  void draw(Canvas canvas, Size size, bool deeper) {
-    final Rect rect = Rect.fromPoints(startPoint, startPoint + this.size);
-    paintImage(canvas: canvas, rect: rect, image: image, fit: BoxFit.fill);
-  }
+//   @override
+//   void draw(Canvas canvas, Size size, bool deeper) {
+//     final Rect rect = Rect.fromPoints(startPoint, startPoint + this.size);
+//     paintImage(canvas: canvas, rect: rect, image: image, fit: BoxFit.fill);
+//   }
 
-  @override
-  ImageContent copy() => ImageContent(image);
+//   @override
+//   ImageContent copy() => ImageContent(image);
 
-  @override
-  Map<String, dynamic> toContentJson() {
-    return <String, dynamic>{
-      'startPoint': startPoint.toJson(),
-      'size': size.toJson(),
-      'imageUrl': imageUrl,
-      'paint': paint.toJson(),
-    };
-  }
-}
+//   @override
+//   Map<String, dynamic> toContentJson() {
+//     return <String, dynamic>{
+//       'startPoint': startPoint.toJson(),
+//       'size': size.toJson(),
+//       'imageUrl': imageUrl,
+//       'paint': paint.toJson(),
+//     };
+//   }
+// }
 
 void main() {
   FlutterError.onError = (FlutterErrorDetails details) {
@@ -306,7 +306,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.grey,
+      // backgroundColor: Colors.grey,
       appBar: AppBar(
         title: const Text('Drawing Test'),
         systemOverlayStyle: SystemUiOverlayStyle.light,
@@ -327,8 +327,8 @@ class _MyHomePageState extends State<MyHomePage> {
             child: LayoutBuilder(
               builder: (BuildContext context, BoxConstraints constraints) {
                 return DrawingBoard(
-                  // boardPanEnabled: false,
-                  // boardScaleEnabled: false,
+                  boardPanEnabled: false,
+                  boardScaleEnabled: false,
                   transformationController: _transformationController,
                   controller: _drawingController,
                   background: Container(
@@ -338,60 +338,60 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   showDefaultActions: true,
                   showDefaultTools: true,
-                  defaultToolsBuilder: (Type t, _) {
-                    return DrawingBoard.defaultTools(t, _drawingController)
-                      ..insert(
-                        1,
-                        DefToolItem(
-                          icon: Icons.change_history_rounded,
-                          isActive: t == Triangle,
-                          onTap: () =>
-                              _drawingController.setPaintContent(Triangle()),
-                        ),
-                      )
-                      ..insert(
-                        2,
-                        DefToolItem(
-                          icon: Icons.image_rounded,
-                          isActive: t == ImageContent,
-                          onTap: () async {
-                            showDialog(
-                              context: context,
-                              barrierDismissible: false,
-                              builder: (BuildContext c) {
-                                return const Center(
-                                  child: CircularProgressIndicator(),
-                                );
-                              },
-                            );
+                  // defaultToolsBuilder: (Type t, _) {
+                  //   return DrawingBoard.defaultTools(t, _drawingController)
+                  //     ..insert(
+                  //       1,
+                  //       DefToolItem(
+                  //         icon: Icons.change_history_rounded,
+                  //         isActive: t == Triangle,
+                  //         onTap: () =>
+                  //             _drawingController.setPaintContent(Triangle()),
+                  //       ),
+                  //     )
+                  //     ..insert(
+                  //       2,
+                  //       DefToolItem(
+                  //         icon: Icons.image_rounded,
+                  //         isActive: t == ImageContent,
+                  //         onTap: () async {
+                  //           showDialog(
+                  //             context: context,
+                  //             barrierDismissible: false,
+                  //             builder: (BuildContext c) {
+                  //               return const Center(
+                  //                 child: CircularProgressIndicator(),
+                  //               );
+                  //             },
+                  //           );
 
-                            try {
-                              _drawingController.setPaintContent(ImageContent(
-                                await _getImage(_imageUrl),
-                                imageUrl: _imageUrl,
-                              ));
-                            } catch (e) {
-                              //
-                            } finally {
-                              if (context.mounted) {
-                                Navigator.pop(context);
-                              }
-                            }
-                          },
-                        ),
-                      );
-                  },
+                  //           try {
+                  //             _drawingController.setPaintContent(ImageContent(
+                  //               await _getImage(_imageUrl),
+                  //               imageUrl: _imageUrl,
+                  //             ));
+                  //           } catch (e) {
+                  //             //
+                  //           } finally {
+                  //             if (context.mounted) {
+                  //               Navigator.pop(context);
+                  //             }
+                  //           }
+                  //         },
+                  //       ),
+                  //     );
+                  // },
                 );
               },
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: SelectableText(
-              'https://github.com/fluttercandies/flutter_drawing_board',
-              style: TextStyle(fontSize: 10, color: Colors.white),
-            ),
-          ),
+          // const Padding(
+          //   padding: EdgeInsets.all(8.0),
+          //   child: SelectableText(
+          //     'https://github.com/fluttercandies/flutter_drawing_board',
+          //     style: TextStyle(fontSize: 10, color: Colors.white),
+          //   ),
+          // ),
         ],
       ),
     );

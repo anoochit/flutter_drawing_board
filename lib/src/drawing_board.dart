@@ -12,6 +12,7 @@ import 'paint_contents/rectangle.dart';
 import 'paint_contents/simple_line.dart';
 import 'paint_contents/smooth_line.dart';
 import 'paint_contents/straight_line.dart';
+import 'paint_contents/triangle.dart';
 import 'painter.dart';
 
 /// 默认工具栏构建器
@@ -113,6 +114,10 @@ class DrawingBoard extends StatefulWidget {
           icon: CupertinoIcons.stop,
           onTap: () => controller.setPaintContent(Rectangle())),
       DefToolItem(
+          isActive: currType == Triangle,
+          icon: CupertinoIcons.triangle,
+          onTap: () => controller.setPaintContent(Triangle())),
+      DefToolItem(
           isActive: currType == Circle,
           icon: CupertinoIcons.circle,
           onTap: () => controller.setPaintContent(Circle())),
@@ -129,8 +134,11 @@ class DrawingBoard extends StatefulWidget {
 
   static Widget buildDefaultTools(DrawingController controller,
       {DefaultToolsBuilder? defaultToolsBuilder, Axis axis = Axis.horizontal}) {
-    return _DrawingBoardState.buildDefaultTools(controller,
-        defaultToolsBuilder: defaultToolsBuilder, axis: axis);
+    return _DrawingBoardState.buildDefaultTools(
+      controller,
+      defaultToolsBuilder: defaultToolsBuilder,
+      axis: axis,
+    );
   }
 
   @override
@@ -170,13 +178,23 @@ class _DrawingBoardState extends State<DrawingBoard> {
     );
 
     if (widget.showDefaultActions || widget.showDefaultTools) {
-      content = Column(
-        children: <Widget>[
+      content = Stack(
+        children: [
+          // canvas
           Expanded(child: content),
-          if (widget.showDefaultActions) buildDefaultActions(_controller),
+
+          // tools
           if (widget.showDefaultTools)
-            buildDefaultTools(_controller,
-                defaultToolsBuilder: widget.defaultToolsBuilder),
+            buildDefaultTools(
+              _controller,
+              defaultToolsBuilder: widget.defaultToolsBuilder,
+              axis: Axis.vertical,
+            ),
+          // actions
+          if (widget.showDefaultActions)
+            Align(
+                alignment: Alignment.bottomCenter,
+                child: buildDefaultActions(_controller)),
         ],
       );
     }
