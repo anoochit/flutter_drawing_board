@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 import 'dart:ui' as ui;
 
@@ -238,6 +239,21 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    // listen repaint notifier
+    _drawingController.realPainter!.addListener(
+      () {
+        final l = _drawingController.getJsonList().length;
+        log('lenght = $l');
+        _drawingController.getImageData().then((b) {
+          log('img lenght = ${b!.buffer.lengthInBytes}');
+        });
+      },
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -283,6 +299,12 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   showDefaultActions: true,
                   showDefaultTools: true,
+                  // onInteractionEnd: (p) => log(' $p'),
+                  // onInteractionStart: (p) => log(' $p'),
+                  // onInteractionUpdate: (p) => log(' $p'),
+                  // onPointerDown: (p) => log(' $p'),
+                  // onPointerUp: (p) => log(' $p'),
+                  // onPointerMove: (p) => log(' $p'),
                   // defaultToolsBuilder: (Type t, _) {
                   //   return DrawingBoard.defaultTools(t, _drawingController)
                   //     ..insert(
@@ -291,31 +313,31 @@ class _MyHomePageState extends State<MyHomePage> {
                   //         icon: Icons.image_rounded,
                   //         isActive: t == ImageContent,
                   //         onTap: () async {
-                  //           showDialog(
-                  //             context: context,
-                  //             barrierDismissible: false,
-                  //             builder: (BuildContext c) {
-                  //               return const Center(
-                  //                 child: CircularProgressIndicator(),
-                  //               );
-                  //             },
-                  //           );
-
-                  //           try {
-                  //             _drawingController.setPaintContent(ImageContent(
-                  //               await _getImage(_imageUrl),
-                  //               imageUrl: _imageUrl,
-                  //             ));
-                  //           } catch (e) {
-                  //             //
-                  //           } finally {
-                  //             if (context.mounted) {
-                  //               Navigator.pop(context);
-                  //             }
-                  //           }
-                  //         },
-                  //       ),
+                  // showDialog(
+                  //   context: context,
+                  //   barrierDismissible: false,
+                  //   builder: (BuildContext c) {
+                  //     return const Center(
+                  //       child: CircularProgressIndicator(),
                   //     );
+                  //   },
+                  // );
+
+                  // try {
+                  //   _drawingController.setPaintContent(ImageContent(
+                  //     await _getImage(_imageUrl),
+                  //     imageUrl: _imageUrl,
+                  //   ));
+                  // } catch (e) {
+                  //   //
+                  // } finally {
+                  //   if (context.mounted) {
+                  //     Navigator.pop(context);
+                  //   }
+                  // }
+                  // },
+                  // ),
+                  // );
                   // },
                 );
               },

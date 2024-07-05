@@ -25,7 +25,7 @@ class DrawConfig {
     this.shader,
     this.strokeCap = StrokeCap.round,
     this.strokeJoin = StrokeJoin.round,
-    this.strokeWidth = 4,
+    this.strokeWidth = 10,
     this.style = PaintingStyle.stroke,
   });
 
@@ -45,7 +45,7 @@ class DrawConfig {
     this.shader,
     this.strokeCap = StrokeCap.round,
     this.strokeJoin = StrokeJoin.round,
-    this.strokeWidth = 4,
+    this.strokeWidth = 10,
     this.style = PaintingStyle.stroke,
   });
 

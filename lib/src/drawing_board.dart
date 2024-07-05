@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+// import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'drawing_controller.dart';
 
 import 'helper/ex_value_builder.dart';
@@ -128,8 +129,9 @@ class DrawingBoard extends StatefulWidget {
     ];
   }
 
-  static Widget buildDefaultActions(DrawingController controller) {
-    return _DrawingBoardState.buildDefaultActions(controller);
+  static Widget buildDefaultActions(
+      BuildContext context, DrawingController controller) {
+    return _DrawingBoardState.buildDefaultActions(context, controller);
   }
 
   static Widget buildDefaultTools(DrawingController controller,
@@ -191,7 +193,8 @@ class _DrawingBoardState extends State<DrawingBoard> {
             child: Column(
               children: [
                 // actions
-                if (widget.showDefaultActions) buildDefaultActions(_controller),
+                if (widget.showDefaultActions)
+                  buildDefaultActions(context, _controller),
                 // canvas
                 Expanded(child: content),
               ],
@@ -272,7 +275,8 @@ class _DrawingBoardState extends State<DrawingBoard> {
   }
 
   /// 构建默认操作栏
-  static Widget buildDefaultActions(DrawingController controller) {
+  static Widget buildDefaultActions(
+      BuildContext context, DrawingController controller) {
     return Material(
       color: Colors.white,
       child: SingleChildScrollView(
@@ -298,6 +302,32 @@ class _DrawingBoardState extends State<DrawingBoard> {
                 },
               ),
             ),
+            // IconButton(
+            //     icon: Icon(
+            //       CupertinoIcons.square_fill,
+            //       color: controller.getColor,
+            //     ),
+            //     onPressed: () {
+            //       // show color picker
+            //       showDialog(
+            //         context: context,
+            //         builder: (BuildContext context) {
+            //           return AlertDialog(
+            //             title: Text('Pick color'),
+            //             content: SingleChildScrollView(
+            //               child: BlockPicker(
+            //                 onColorChanged: (value) {
+            //                   // set color
+            //                   controller.setStyle(color: value);
+            //                   Navigator.pop(context);
+            //                 },
+            //                 pickerColor: controller.getColor,
+            //               ),
+            //             ),
+            //           );
+            //         },
+            //       );
+            //     }),
             IconButton(
                 icon: const Icon(CupertinoIcons.arrow_turn_up_left),
                 onPressed: () => controller.undo()),
