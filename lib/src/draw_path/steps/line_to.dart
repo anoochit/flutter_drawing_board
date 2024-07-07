@@ -5,8 +5,8 @@ class LineTo extends OperationStep {
 
   factory LineTo.fromJson(Map<String, dynamic> data) {
     return LineTo(
-      data['x'] as double,
-      data['y'] as double,
+      double.parse('${data['x']}'),
+      double.parse('${data['y']}'),
     );
   }
 
